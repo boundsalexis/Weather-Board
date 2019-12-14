@@ -32,7 +32,14 @@ $.ajax({
     var humidity = response.main.humidity;
     var wind = response.wind.speed;
     var icon = response.weather[0].icon;
-    $("#city").text(userInput);
+    var iconURL ="https://openweathermap.org/img/wn/"+icon+"@2x.png";
+    var date = moment().format("l");
+    var addIcon=$("<img>");
+    addIcon.attr("src", iconURL);
+    $("#city").text(userInput +" "+ date);
+
+    $("#city").append(addIcon);
+    // $("#city").text(userInput +" "+ date);
     $("#temp").text(temperature);
     $("#humidity").text(humidity);
     $("#wind").text(wind);
@@ -40,10 +47,10 @@ $.ajax({
     lon= response.coord.lon;
     lat= response.coord.lat;
     uvIndex(lat,lon); // to get the index
-
-    // place weather icon
-    var iconURL ="https://openweathermap.org/img/wn/"+icon+"@2x.png"
-    $("#image").attr("src", iconURL);
+    fiveDay(lat,lon); // get forecast
+    // // place weather icon
+    // var iconURL ="https://openweathermap.org/img/wn/"+icon+"@2x.png"
+    // $("#image").attr("src", iconURL);
 
 });
 
@@ -96,5 +103,15 @@ function populateHistory(){
        newsearch.text(item);
        $("#history").append(newsearch);
     }
+}
+function fiveDay(lat,lon){
+var fiveQuery ="https://api.openweathermap.org/data/2.5/forecast?units=imperial&appid="+ apiKey +"&lat="+lat+"&lon="+ lon;
+$.ajax({
+    url: fiveQuery,
+    method: "GET"
+}).then(function(response){
+    console.log(response);
+})
+
 }
 })
