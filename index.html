@@ -7,36 +7,43 @@
     <title>Weather Board</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
 </head>
 <body>
+<div class="heading">
+    <div class="row">
+        <div class="col-md-4">
+        <h1 id="heading">emptyme</h1>
+        </div>
+        <div class="col-md-8">
+        <h1>Weather Board</h1>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="row">
-                <h1 id="placeholding">emptyme</h1>
-            </div>
             <div class="row">
                 <p>Search for a city:</p>
             </div>
             <div class="row">
                 <input type="text" id="inputCity">
-                <input type="submit" value="Submit">
+                <button id="submit" type="submit" value="Submit">submit</button>
             </div>
             <div class="row" id="history">
 <!--      might need another div to hold histories            -->
             </div>
         </div>
         <div class="col-md-8">
-            <div class="row">
-            <h1>Weather Board</h1>
-            </div>
             <div class="row" >
             <div class="content" id= "currentWeather">
                 <h3>City Placeholder</h3>
-                <p>Temperature: <span id="temp">placeholder</span> &#176;</p>
-                <p>Humidity: <span id="temp">placeholder</span> &#37;</p>
-                <p>Wind Speed: <span id="temp">placeholder</span> MPH</p>
-                <p>UV Index: <span id="temp">placeholder</span> </p>
+                <p>Temperature: <span id="temp"></span> &#176;</p>
+                <p>Humidity: <span id="humidity"></span> &#37;</p>
+                <p>Wind Speed: <span id="wind"></span> MPH</p>
+                <p>UV Index: <span id="uvi"></span> </p>
             </div>
             </div>
             <div class="row">
@@ -44,7 +51,7 @@
             </div>
             <div class="row">
                 <div id="forecast">
-                    
+
                 </div>
             </div>
         </div>
@@ -52,8 +59,7 @@
 </div>
     
 
-
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,24 @@
+.heading{
+    background-color:pink;
+    text-align: center;
+}
+#heading{
+    color:pink;
+}
+
+/* fix these colors to look better */
+.low{
+background-color: green;
+}
+.medium{
+background-color: yellow;
+}
+.high{
+background-color: orange;
+}
+.veryhigh{
+background-color:red;
+}
+.extreme{
+background-color:purple;
+}
