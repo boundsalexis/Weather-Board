@@ -22,3 +22,11 @@ background-color:red;
 .extreme{
 background-color:purple;
 }
+.row{
+    margin: 0 auto;
+}
+.outer{
+    border-radius: 4px;
+    background-color: blue;
+    margin:10px;
+}

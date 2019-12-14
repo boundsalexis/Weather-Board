@@ -98,14 +98,18 @@ populateHistory();
 function populateHistory(){
     $("#history").empty();
     for (var i=0; i<searchHistoryArray.length; i++){
-       var newsearch = $("<p>");
+       var newsearch = $("<button id='#historyButtons'>");
        var item = window.localStorage.getItem(i.toString());
        newsearch.text(item);
        $("#history").append(newsearch);
     }
 }
+$("#historyButtons").on("click", function(){
+
+})
 var j =1;
 function fiveDay(lat,lon){
+    $(".fiveDayBoxes").empty();
 var fiveQuery ="https://api.openweathermap.org/data/2.5/forecast?units=imperial&appid="+ apiKey +"&lat="+lat+"&lon="+ lon;
 $.ajax({
     url: fiveQuery,
@@ -119,7 +123,7 @@ $.ajax({
 
         var iconURL ="https://openweathermap.org/img/wn/"+icon+"@2x.png";
         var contentBox = $("<div class='outer'>");
-        var insideBox =$
+       var newrow= $("<div class='row'>");
     var ptemp =$("<p id='fiveTemp'>");
     var phumidity =$("<p id='fivehumidity'>");
     var iconimg =$("<img src="+iconURL+">");
@@ -128,16 +132,19 @@ $.ajax({
     ptemp.html("Temperature: " +temp + "&#176;");
     phumidity.html("Humidity: "+ humidity +"&#37;");
 
-        $(contentBox).append(date);
-        $(contentBox).append(iconimg);
-        $(contentBox).append(ptemp);
-        $(contentBox).append(phumidity);
-        $(".fiveDayBoxes").prepend(contentBox);
+        // $(newrow).append("eggs");
+        $(newrow).append(iconimg);
+        $(newrow).append(ptemp);
+        $(newrow).append(phumidity);
 
+        $(".fiveDayBoxes").append(contentBox);
+        contentBox.addClass("col-md-2");
+        contentBox.prepend(newrow);
 
 j++;
     }
 })
 
 }
+
 })
