@@ -1,33 +1,47 @@
 $(document).ready(function(){
-var apiKey ="388ef372adda68b3d644c51a14d31ab6";
-var searchHistoryArray=[];
-// var userInput =$("#inputCity").val();
+//api key
+    var apiKey ="388ef372adda68b3d644c51a14d31ab6";
 
+//array to hold search history
+var searchHistoryArray=[];
+//retrive history from local storage when page opens
+// populateHistory();
+
+
+// when user clicks submit
 $("#submit").on("click",function(event){
-event.preventDefault();
+event.preventDefault(); // stop from reloading
+// grab value from input
 var userInput =$("#inputCity").val();
+// push that value into our history array
 searchHistoryArray.push(userInput);
+// add that history to our locale storage
 addHistory();
-console.log(searchHistoryArray);
+
+
+// current weather query
 var queryURL =
 "https://api.openweathermap.org/data/2.5/weather?units=imperial&q="+userInput+"&appid=" + apiKey;
-
+// populate the current weather box
 $.ajax({
     url: queryURL,
     method: "GET"
 }).then(function(response){
+    console.log(userInput);
     var temperature = response.main.temp;
     var humidity = response.main.humidity;
     var wind = response.wind.speed;
     var icon = response.weather[0].icon;
+    $("#city").text(userInput);
     $("#temp").text(temperature);
     $("#humidity").text(humidity);
     $("#wind").text(wind);
 
     lon= response.coord.lon;
     lat= response.coord.lat;
-    uvIndex(lat,lon);
-    console.log(icon);
+    uvIndex(lat,lon); // to get the index
+
+    // place weather icon
     var iconURL ="https://openweathermap.org/img/wn/"+icon+"@2x.png"
     $("#image").attr("src", iconURL);
 
@@ -35,6 +49,7 @@ $.ajax({
 
 });
 function uvIndex(lat,lon){
+    // remove alll color classes to replace with current correct one
 var uvi = $("#uvi");
 uvi.removeClass("low");
 uvi.removeClass("medium");
@@ -48,8 +63,6 @@ uvi.removeClass("extreme");
     }).then(function(response){
         var uviValue=response.value;
         uvi.text(uviValue);
-        console.log(uviValue);
-        console.log(uviValue <3);
         if (uviValue <3){
         uvi.addClass("low");   
         }
@@ -67,11 +80,21 @@ uvi.removeClass("extreme");
         }
     });
 }
+// adding history to local storage
 function addHistory(){
     for( var i=0; i<searchHistoryArray.length; i++){
         var stringI= i.toString();
         window.localStorage.setItem(stringI, searchHistoryArray[i]);
+    } //subsequently populating the displayed history
+populateHistory();
+}
+function populateHistory(){
+    $("#history").empty();
+    for (var i=0; i<searchHistoryArray.length; i++){
+       var newsearch = $("<p>");
+       var item = window.localStorage.getItem(i.toString());
+       newsearch.text(item);
+       $("#history").append(newsearch);
     }
-
 }
 })
