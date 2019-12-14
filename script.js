@@ -104,13 +104,39 @@ function populateHistory(){
        $("#history").append(newsearch);
     }
 }
+var j =1;
 function fiveDay(lat,lon){
 var fiveQuery ="https://api.openweathermap.org/data/2.5/forecast?units=imperial&appid="+ apiKey +"&lat="+lat+"&lon="+ lon;
 $.ajax({
     url: fiveQuery,
     method: "GET"
 }).then(function(response){
-    console.log(response);
+   
+    for( var i=2; i<=40; i+=8){
+        var icon =response.list[i].weather[0].icon;
+        var temp =response.list[i].main.temp;
+        var humidity=response.list[i].main.humidity;
+
+        var iconURL ="https://openweathermap.org/img/wn/"+icon+"@2x.png";
+        var contentBox = $("<div class='outer'>");
+        var insideBox =$
+    var ptemp =$("<p id='fiveTemp'>");
+    var phumidity =$("<p id='fivehumidity'>");
+    var iconimg =$("<img src="+iconURL+">");
+    var date =moment().add(j, 'days').format('l');
+    var degrees =""
+    ptemp.html("Temperature: " +temp + "&#176;");
+    phumidity.html("Humidity: "+ humidity +"&#37;");
+
+        $(contentBox).append(date);
+        $(contentBox).append(iconimg);
+        $(contentBox).append(ptemp);
+        $(contentBox).append(phumidity);
+        $(".fiveDayBoxes").prepend(contentBox);
+
+
+j++;
+    }
 })
 
 }
