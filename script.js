@@ -1,13 +1,16 @@
 $(document).ready(function(){
-// console.log()
 var apiKey ="388ef372adda68b3d644c51a14d31ab6";
-var lat;
-var lon;
+var searchHistoryArray=[];
+// var userInput =$("#inputCity").val();
+
 $("#submit").on("click",function(event){
 event.preventDefault();
-// var apiKey ="388ef372adda68b3d644c51a14d31ab6";
+var userInput =$("#inputCity").val();
+searchHistoryArray.push(userInput);
+addHistory();
+console.log(searchHistoryArray);
 var queryURL =
-"https://api.openweathermap.org/data/2.5/weather?units=imperial&q="+$("#inputCity").val()+"&appid=" + apiKey;
+"https://api.openweathermap.org/data/2.5/weather?units=imperial&q="+userInput+"&appid=" + apiKey;
 
 $.ajax({
     url: queryURL,
@@ -16,7 +19,7 @@ $.ajax({
     var temperature = response.main.temp;
     var humidity = response.main.humidity;
     var wind = response.wind.speed;
-
+    var icon = response.weather[0].icon;
     $("#temp").text(temperature);
     $("#humidity").text(humidity);
     $("#wind").text(wind);
@@ -24,12 +27,11 @@ $.ajax({
     lon= response.coord.lon;
     lat= response.coord.lat;
     uvIndex(lat,lon);
+    console.log(icon);
+    var iconURL ="https://openweathermap.org/img/wn/"+icon+"@2x.png"
+    $("#image").attr("src", iconURL);
 
-    
 });
-
-// uvIndex(lon,lat);
-
 
 });
 function uvIndex(lat,lon){
@@ -65,5 +67,11 @@ uvi.removeClass("extreme");
         }
     });
 }
+function addHistory(){
+    for( var i=0; i<searchHistoryArray.length; i++){
+        var stringI= i.toString();
+        window.localStorage.setItem(stringI, searchHistoryArray[i]);
+    }
 
+}
 })
